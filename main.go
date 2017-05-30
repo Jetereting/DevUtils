@@ -14,7 +14,6 @@ func init() {
 	pwd :=beego.AppConfig.String("mysql::pwd")
 	orm.RegisterDriver("mysql", orm.DRMySQL)
 	orm.RegisterDataBase("default", "mysql", user+":"+pwd+"@tcp("+host+")/"+database)
-	//orm.RegisterDataBase("default", "mysql","qdxg:qdxg_603@tcp(192.168.1.201:3306)/qdxg")
 }
 
 

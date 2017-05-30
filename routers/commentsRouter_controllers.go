@@ -6,25 +6,18 @@ import (
 
 func init() {
 
-	beego.GlobalControllerRouter["beegoAutoDoc/controllers:MainController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:MainController"],
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"],
 		beego.ControllerComments{
 			Method: "Get",
-			Router: `/a/getTempTableSql`,
+			Router: `/getTempTableSql`,
 			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
-	beego.GlobalControllerRouter["beegoAutoDoc/controllers:MainController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:MainController"],
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"],
 		beego.ControllerComments{
-			Method: "UploadExcel",
-			Router: `/b/file/`,
+			Method: "ParseFile",
+			Router: `/parseFile/`,
 			AllowHTTPMethods: []string{"post"},
-			Params: nil})
-
-	beego.GlobalControllerRouter["beegoAutoDoc/controllers:MainController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:MainController"],
-		beego.ControllerComments{
-			Method: "ParseExcel",
-			Router: `/c/file/`,
-			AllowHTTPMethods: []string{"get"},
 			Params: nil})
 
 }

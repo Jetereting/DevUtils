@@ -1,37 +1,18 @@
 swagger: "2.0"
 info:
-  title: 暂时用作excle导入到临时表
+  title: 便于开发的工具集合
   description: nothing to talk.
   version: 1.0.0
   contact:
     email: alloyjetereting@gmail.com
 basePath: /api
 paths:
-  /main/a/getTempTableSql:
+  /excelToMysql/getTempTableSql:
     get:
       tags:
-      - main
+      - excelToMysql
       summary: 获取创建temp_table语句
-      operationId: MainController.获取创建temp_table语句
-      responses:
-        "200":
-          description: 进入成功
-        "400":
-          description: 请求发生错误
-        "500":
-          description: 服务器错误
-  /main/b/file/:
-    post:
-      tags:
-      - main
-      summary: 上传xlsx文件
-      operationId: MainController.上传exc
-      parameters:
-      - in: formData
-        name: fileData
-        description: 文件数据
-        required: true
-        type: file
+      operationId: ExcelToMysqlController.获取创建temp_table语句
       responses:
         "200":
           description: 成功
@@ -39,18 +20,18 @@ paths:
           description: 请求发生错误
         "500":
           description: 服务器错误
-  /main/c/file/:
-    get:
+  /excelToMysql/parseFile/:
+    post:
       tags:
-      - main
-      summary: 解析xlsx文件到临时表
-      operationId: MainController.解析exc
+      - excelToMysql
+      summary: 上传xlsx文件并解析到临时表
+      operationId: ExcelToMysqlController.上传xlsx文件并解析到临时表
       parameters:
-      - in: query
-        name: filePath
-        description: excel文件在服务器的路径(暂时只支持xlsx格式的 且只有一个sheet,小于62列) 导入完成后该文件会被自动删除
+      - in: formData
+        name: fileData
+        description: 文件数据(暂时只支持xlsx格式的 且只有一个sheet,小于62列) 导入完成后该文件会被自动删除
         required: true
-        type: string
+        type: file
       - in: query
         name: mark
         description: 用于区分导入的文件，对应temp_table表的 Mark 字段
@@ -64,6 +45,6 @@ paths:
         "500":
           description: 服务器错误
 tags:
-- name: main
+- name: excelToMysql
   description: |
-    main 入口
+    excle导入到临时表

@@ -4,7 +4,6 @@ import (
 	"github.com/astaxie/beego"
 	"fmt"
 	"time"
-	"beegoAutoDoc/utils"
 	"github.com/tealeg/xlsx"
 	"github.com/astaxie/beego/orm"
 	"beegoAutoDoc/models"
@@ -12,18 +11,18 @@ import (
 	"strings"
 )
 
-//main 入口
-type MainController struct {
+// excle导入到临时表
+type ExcelToMysqlController struct {
 	beego.Controller
 }
 
 // @Summary 获取创建temp_table语句
 // @Title 获取创建temp_table语句
-// @Success 200 进入成功
+// @Success 200 成功
 // @Failure 400 请求发生错误
 // @Failure 500 服务器错误
-// @router /a/getTempTableSql [get]
-func (c *MainController) Get() {
+// @router /getTempTableSql [get]
+func (c *ExcelToMysqlController) Get() {
 	result := make(map[string]interface{})
 	result["text"] =
 		`
@@ -101,68 +100,42 @@ func (c *MainController) Get() {
 }
 
 
-// @Summary 上传xlsx文件
-// @Title 上传exc
-// @Param fileData formData file true "文件数据"
-// @Success 200 成功
-// @Failure 400 请求发生错误
-// @Failure 500 服务器错误
-// @router /b/file/ [post]
-func (c *MainController) UploadExcel() {
-	f, h, err := c.GetFile("fileData")
-	defer f.Close()
-	if err != nil {
-		fmt.Println("getfile err ", err)
-	} else {
-		filePath := "static/upload/" + time.Now().Format("20060102150405") + h.Filename
-		err = c.SaveToFile("fileData", filePath)
-		result := make(map[string]interface{})
-		result["text"] = filePath
-		c.Data["json"] = result
-		c.ServeJSON()
-	}
-}
-
-
-
-// @Summary 解析xlsx文件到临时表
-// @Title 解析exc
-// @Param filePath query string true "excel文件在服务器的路径(暂时只支持xlsx格式的 且只有一个sheet,小于62列) 导入完成后该文件会被自动删除"
+// @Summary 上传xlsx文件并解析到临时表
+// @Title 上传xlsx文件并解析到临时表
+// @Param fileData formData file true "文件数据(暂时只支持xlsx格式的 且只有一个sheet,小于62列) 导入完成后该文件会被自动删除"
 // @Param mark query string true "用于区分导入的文件，对应temp_table表的 Mark 字段"
 // @Success 200 成功
 // @Failure 400 请求发生错误
 // @Failure 500 服务器错误
-// @router /c/file/ [get]
-func (c *MainController) ParseExcel() {
-	result := make(map[string]interface{})
-	result["text"] = "解析成功"
-	c.Data["json"] = result
-	filePath := c.GetString("filePath")
-	beego.Error(filePath)
-	if len(filePath) == 0 {
-		result["text"] = "路径不能为空"
-		c.ServeJSON()
+// @router /parseFile/ [post]
+func (c *ExcelToMysqlController) ParseFile() {
+	filePath:=""
+	f, h, err := c.GetFile("fileData")
+	defer f.Close()
+	if err != nil {
+		fmt.Println("getfile err ", err)
+		c.Ctx.WriteString("错误："+err.Error())
 		return
+	} else {
+		filePath = "static/upload/" + time.Now().Format("20060102150405") + h.Filename
+		err = c.SaveToFile("fileData", filePath)
+		if err!=nil{
+			c.Ctx.WriteString("上传保存失败："+err.Error())
+			return
+		}
 	}
+
 	if strings.Split(filePath,".")[1]!="xlsx"{
-		result["text"] = "暂时只支持xlsx格式的 且只有一个sheet"
-		c.ServeJSON()
-		return
-	}
-	if !utils.PathExist(filePath) {
-		result["text"] = "服务器没有此文件"
-		c.ServeJSON()
+		c.Ctx.WriteString("暂时只支持xlsx格式的 且只有一个sheet："+err.Error())
 		return
 	}
 	file, err := xlsx.OpenFile(filePath)
 	if err != nil {
-		result["text"] = "打开xlsx文件错误，你是不是用其他软件处理了？可以再处理回来的"
-		c.ServeJSON()
+		c.Ctx.WriteString("打开xlsx文件错误，你是不是用其他软件处理了？可以再处理回来的："+err.Error())
 		return
 	}
 	if len(file.Sheets) == 0 {
-		result["text"] = "没有数据，请核实"
-		c.ServeJSON()
+		c.Ctx.WriteString("excel中没有数据，请核实："+err.Error())
 		return
 	}
 
@@ -244,8 +217,9 @@ func (c *MainController) ParseExcel() {
 	}
 	o := orm.NewOrm()
 	successNums, err := o.InsertMulti(100, tempTables)
-	result["插入行数"] =successNums
-	result["错误"] =err
-	c.ServeJSON()
+	if err!=nil{
+		c.Ctx.WriteString("插入失败："+err.Error())
+	}
+	c.Ctx.WriteString(fmt.Sprint("成功！插入行数：",successNums))
 	defer os.Remove(filePath)
 }
