@@ -8,20 +8,18 @@ import (
 )
 
 func init() {
-	host :=beego.AppConfig.String("mysql::host")
-	user :=beego.AppConfig.String("mysql::user")
-	database :=beego.AppConfig.String("mysql::database")
-	pwd :=beego.AppConfig.String("mysql::pwd")
+	runMode:=beego.AppConfig.String("runmode")
+	host := beego.AppConfig.String(runMode+"::host")
+	user := beego.AppConfig.String(runMode+"::user")
+	database := beego.AppConfig.String(runMode+"::database")
+	pwd := beego.AppConfig.String(runMode+"::pwd")
 	orm.RegisterDriver("mysql", orm.DRMySQL)
-	orm.RegisterDataBase("default", "mysql", user+":"+pwd+"@tcp("+host+")/"+database)
+	orm.RegisterDataBase("default", "mysql", user + ":" + pwd + "@tcp(" + host + ")/" + database)
 }
 
-
 func main() {
-	if beego.BConfig.RunMode == "dev" {
-		beego.BConfig.WebConfig.DirectoryIndex = true
-		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
-	}
+	beego.BConfig.WebConfig.DirectoryIndex = true
+	beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	beego.Run()
 }
 

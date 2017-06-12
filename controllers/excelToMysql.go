@@ -17,7 +17,6 @@ type ExcelToMysqlController struct {
 }
 
 // @Summary 获取创建temp_table语句
-// @Title 获取创建temp_table语句
 // @Success 200 成功
 // @Failure 400 请求发生错误
 // @Failure 500 服务器错误
@@ -101,17 +100,16 @@ func (c *ExcelToMysqlController) Get() {
 
 
 // @Summary 上传xlsx文件并解析到临时表
-// @Title 上传xlsx文件并解析到临时表
 // @Param fileData formData file true "文件数据(暂时只支持xlsx格式的 且只有一个sheet,小于62列) 导入完成后该文件会被自动删除"
 // @Param mark query string true "用于区分导入的文件，对应temp_table表的 Mark 字段"
+// @Param replace query string false "替换表中所有的字段,用法示例：+:;a:i (把所有的+替换成空并把所有的a替换成i)(空格和回车已自动去除)"
 // @Success 200 成功
 // @Failure 400 请求发生错误
 // @Failure 500 服务器错误
-// @router /parseFile/ [post]
+// @router /parseFile [post]
 func (c *ExcelToMysqlController) ParseFile() {
 	filePath:=""
 	f, h, err := c.GetFile("fileData")
-	defer f.Close()
 	if err != nil {
 		fmt.Println("getfile err ", err)
 		c.Ctx.WriteString("错误："+err.Error())
@@ -130,6 +128,8 @@ func (c *ExcelToMysqlController) ParseFile() {
 		return
 	}
 	file, err := xlsx.OpenFile(filePath)
+	defer os.Remove(filePath)
+	defer f.Close()
 	if err != nil {
 		c.Ctx.WriteString("打开xlsx文件错误，你是不是用其他软件处理了？可以再处理回来的："+err.Error())
 		return
@@ -141,12 +141,26 @@ func (c *ExcelToMysqlController) ParseFile() {
 
 	sheet := file.Sheets[0]
 	var tempTables []models.TempTable
-	for i, row := range sheet.Rows {
-		if i < 1 {
-			continue
-		}
+	for _, row := range sheet.Rows {
 		tempTable := models.TempTable{}
 		for k, v := range row.Cells {
+			replace:=c.GetString("replace","")
+			v.Value=strings.Replace(v.Value," ","",-1)
+			v.Value=strings.Replace(v.Value,"\n","",-1)
+			if len(replace)!=0{
+				if !strings.Contains(replace,":"){
+					c.Ctx.WriteString("替换的书写不规范，请按示例书写")
+					return
+				}
+				if !strings.Contains(replace,";"){
+					v.Value=strings.Replace(v.Value,strings.Split(replace,":")[0],strings.Split(replace,":")[1],-1)
+				}else {
+					for _,vv:=range strings.Split(replace,";"){
+						v.Value=strings.Replace(v.Value,strings.Split(vv,":")[0],strings.Split(vv,":")[1],-1)
+					}
+				}
+			}
+
 			tempTable.Mark=c.GetString("mark")
 			switch k {
 			case 0:tempTable.Field = v.Value
@@ -216,10 +230,10 @@ func (c *ExcelToMysqlController) ParseFile() {
 		tempTables=append(tempTables,tempTable)
 	}
 	o := orm.NewOrm()
-	successNums, err := o.InsertMulti(100, tempTables)
+	successNums, err := o.InsertMulti(1000, tempTables)
 	if err!=nil{
 		c.Ctx.WriteString("插入失败："+err.Error())
+		return
 	}
 	c.Ctx.WriteString(fmt.Sprint("成功！插入行数：",successNums))
-	defer os.Remove(filePath)
 }

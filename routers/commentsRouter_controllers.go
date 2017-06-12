@@ -16,8 +16,29 @@ func init() {
 	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"],
 		beego.ControllerComments{
 			Method: "ParseFile",
-			Router: `/parseFile/`,
+			Router: `/parseFile`,
 			AllowHTTPMethods: []string{"post"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"],
+		beego.ControllerComments{
+			Method: "ModelToMarkDown",
+			Router: `/ModelToMarkDown`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"],
+		beego.ControllerComments{
+			Method: "MarkDownToModel",
+			Router: `/MarkDownToModel`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ToLowerCaseController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ToLowerCaseController"],
+		beego.ControllerComments{
+			Method: "ToLowerCase",
+			Router: `/toLowerCase`,
+			AllowHTTPMethods: []string{"put"},
 			Params: nil})
 
 }

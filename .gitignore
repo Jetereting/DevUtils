@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+conf/
+lastupdate.tmp
+mem-10681.memprof
+.DS_Store
+beegoAutoDoc
+beegoAutoDoc 2/
+beegoAutoDoc.tar.gz

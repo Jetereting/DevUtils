@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: 便于开发的工具集合
   description: nothing to talk.
-  version: 1.0.0
+  version: 1.1.2
   contact:
     email: alloyjetereting@gmail.com
 basePath: /api
@@ -12,7 +12,6 @@ paths:
       tags:
       - excelToMysql
       summary: 获取创建temp_table语句
-      operationId: ExcelToMysqlController.获取创建temp_table语句
       responses:
         "200":
           description: 成功
@@ -20,12 +19,11 @@ paths:
           description: 请求发生错误
         "500":
           description: 服务器错误
-  /excelToMysql/parseFile/:
+  /excelToMysql/parseFile:
     post:
       tags:
       - excelToMysql
       summary: 上传xlsx文件并解析到临时表
-      operationId: ExcelToMysqlController.上传xlsx文件并解析到临时表
       parameters:
       - in: formData
         name: fileData
@@ -35,6 +33,68 @@ paths:
       - in: query
         name: mark
         description: 用于区分导入的文件，对应temp_table表的 Mark 字段
+        required: true
+        type: string
+      - in: query
+        name: replace
+        description: 替换表中所有的字段,用法示例：+:;a:i (把所有的+替换成空并把所有的a替换成i)(空格和回车已自动去除)
+        type: string
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: 请求发生错误
+        "500":
+          description: 服务器错误
+  /modelTranslateMarkDown/MarkDownToModel:
+    put:
+      tags:
+      - modelTranslateMarkDown
+      summary: markdown to model
+      parameters:
+      - in: body
+        name: body
+        description: markdown里面的内容,此接口只支持bson,按照： |属性|类型|数据库字段|备注|
+        required: true
+        type: string
+      - in: query
+        name: description
+        description: 备注是否放在描述里面
+        type: boolean
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: 请求发生错误
+        "500":
+          description: 服务器错误
+  /modelTranslateMarkDown/ModelToMarkDown:
+    put:
+      tags:
+      - modelTranslateMarkDown
+      summary: model to markdown
+      parameters:
+      - in: body
+        name: body
+        description: 结构体里面的内容,此接口只支持bson,按照： |属性|类型|数据库字段|备注|
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: 请求发生错误
+        "500":
+          description: 服务器错误
+  /toLowercase/toLowerCase:
+    put:
+      tags:
+      - toLowercase
+      summary: 转化为小写
+      parameters:
+      - in: body
+        name: body
+        description: 要变成小写的内容
         required: true
         type: string
       responses:
@@ -48,3 +108,9 @@ tags:
 - name: excelToMysql
   description: |
     excle导入到临时表
+- name: modelTranslateMarkDown
+  description: |
+    model 和 markdown 的相互转化
+- name: toLowercase
+  description: |
+    路由等全部转化成小写
