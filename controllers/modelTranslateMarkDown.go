@@ -22,6 +22,7 @@ func (c *ModelTranslateMarkDownController) ModelToMarkDown() {
 	req := c.Ctx.Request.Body
 	bod, _ := ioutil.ReadAll(req)
 	body := string(bod)
+
 	body = strings.Replace(body, "\"", "", -1)
 	body = strings.Replace(body, "`", "", -1)
 	body = strings.Replace(body, ":", "", -1)
