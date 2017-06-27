@@ -46,6 +46,7 @@ func (c *ModelTranslateMarkDownController) ModelToMarkDown() {
 	result = strings.Replace(result, "	", "", -1)
 	c.Ctx.WriteString(result)
 }
+//six six six
 
 // @Summary markdown to model
 // @Param body body string true "markdown里面的内容,此接口只支持bson,按照： |属性|类型|字段|备注|  或 |字段|类型|说明| "
