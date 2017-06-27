@@ -54,7 +54,7 @@ paths:
       parameters:
       - in: body
         name: body
-        description: markdown里面的内容,此接口只支持bson,按照： |属性|类型|数据库字段|备注|
+        description: markdown里面的内容,此接口只支持bson,按照： |属性|类型|字段|备注|  或 |字段|类型|说明|
         required: true
         type: string
       - in: query
@@ -79,6 +79,10 @@ paths:
         description: 结构体里面的内容,此接口只支持bson,按照： |属性|类型|数据库字段|备注|
         required: true
         type: string
+      - in: query
+        name: is3
+        description: '|字段|类型|说明|'
+        type: boolean
       responses:
         "200":
           description: 成功

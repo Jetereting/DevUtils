@@ -9,7 +9,7 @@ func init() {
 
 type TempTable struct {
 	Id      int `orm:"column(id);auto" json:"id"`
-	Mark string
+	Mark    string
 	Field   string `orm:"column(Field)"`
 	Field1  string
 	Field2  string
