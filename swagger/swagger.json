@@ -105,12 +105,6 @@
                         "description": "用于区分导入的文件，对应temp_table表的 Mark 字段",
                         "required": true,
                         "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "replace",
-                        "description": "替换表中所有的字段,用法示例：+:;a:i (把所有的+替换成空并把所有的a替换成i)(空格和回车已自动去除)",
-                        "type": "string"
                     }
                 ],
                 "responses": {
