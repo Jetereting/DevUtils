@@ -10,6 +10,62 @@
     },
     "basePath": "/api",
     "paths": {
+        "/docToCode/apiPhoneController": {
+            "put": {
+                "tags": [
+                    "docToCode"
+                ],
+                "summary": "生成apiphone的controller层",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "页面名称|名称英文+回车+接口名称|名称英文|参数+参数|i（是否带用户码）",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    },
+                    "400": {
+                        "description": "请求发生错误"
+                    },
+                    "500": {
+                        "description": "服务器错误"
+                    }
+                }
+            }
+        },
+        "/docToCode/apiPhoneHandle": {
+            "put": {
+                "tags": [
+                    "docToCode"
+                ],
+                "summary": "生成apiphone的handle层",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "页面名称|名称英文+回车+接口名称|名称英文|参数+参数|i（是否带用户码）",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    },
+                    "400": {
+                        "description": "请求发生错误"
+                    },
+                    "500": {
+                        "description": "服务器错误"
+                    }
+                }
+            }
+        },
         "/excelToMysql/getTempTableSql": {
             "get": {
                 "tags": [
@@ -179,6 +235,10 @@
         {
             "name": "toLowercase",
             "description": "路由等全部转化成小写\n"
+        },
+        {
+            "name": "docToCode",
+            "description": "文档生成代码\n"
         }
     ]
 }

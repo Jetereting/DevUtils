@@ -6,6 +6,20 @@ import (
 
 func init() {
 
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:DocToCodeController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:DocToCodeController"],
+		beego.ControllerComments{
+			Method: "ApiPhoneController",
+			Router: `/apiPhoneController`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:DocToCodeController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:DocToCodeController"],
+		beego.ControllerComments{
+			Method: "ApiPhoneHandles",
+			Router: `/apiPhoneHandle`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ExcelToMysqlController"],
 		beego.ControllerComments{
 			Method: "Get",

@@ -7,3 +7,4 @@ mem-10681.memprof
 beegoAutoDoc
 beegoAutoDoc 2/
 beegoAutoDoc.tar.gz
+!/controllers/docToCode.go

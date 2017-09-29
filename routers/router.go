@@ -26,6 +26,11 @@ func init() {
 				&controllers.ToLowerCaseController{},
 			),
 		),
+		beego.NSNamespace("/docToCode",
+			beego.NSInclude(
+				&controllers.DocToCodeController{},
+			),
+		),
 	)
 	beego.AddNamespace(ns)
 }

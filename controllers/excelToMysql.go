@@ -25,7 +25,7 @@ func (c *ExcelToMysqlController) Get() {
 	result := make(map[string]interface{})
 	result["text"] =
 		`
-		CREATE TABLE qdxg.temp_table
+		CREATE TABLE temp_table
 		(
 		  Id INT(11) PRIMARY KEY NOT NULL COMMENT 'id' AUTO_INCREMENT,
 		  Mark VARCHAR(50),
@@ -121,21 +121,21 @@ func (c *ExcelToMysqlController) ParseFile() {
 			c.Ctx.WriteString("上传保存失败："+err.Error())
 			return
 		}
+		defer os.Remove(filePath)
+		defer f.Close()
 	}
 
 	if strings.Split(filePath,".")[1]!="xlsx"{
-		c.Ctx.WriteString("暂时只支持xlsx格式的 且只有一个sheet："+err.Error())
+		c.Ctx.WriteString("暂时只支持xlsx格式的 且只对第一个sheet起作用,可以转换好后再来尝试")
 		return
 	}
 	file, err := xlsx.OpenFile(filePath)
-	defer os.Remove(filePath)
-	defer f.Close()
 	if err != nil {
 		c.Ctx.WriteString("打开xlsx文件错误，你是不是用其他软件处理了？可以再处理回来的："+err.Error())
 		return
 	}
 	if len(file.Sheets) == 0 {
-		c.Ctx.WriteString("excel中没有数据，请核实："+err.Error())
+		c.Ctx.WriteString("excel中没有数据，请核实：")
 		return
 	}
 
