@@ -100,8 +100,8 @@ CREATE TABLE excel_table
 
 
 // @Summary 上传xlsx文件并解析到临时表
-// @Param fileData formData file true "文件数据(暂时只支持xlsx格式的 且只有一个sheet,小于62列) 导入完成后该文件会被自动删除"
-// @Param mark query string true "用于区分导入的文件，对应temp_table表的 Mark 字段"
+// @Param fileData formData file true "文件数据(只支持xlsx格式的 小于62列) 导入完成后该文件会被自动删除"
+// @Param mark query string true "用于区分导入的文件，对应excel_table表的 Mark 字段"
 // @Success 200 成功
 // @Failure 400 请求发生错误
 // @Failure 500 服务器错误
