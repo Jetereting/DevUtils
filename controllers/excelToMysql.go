@@ -9,6 +9,7 @@ import (
 	"beegoAutoDoc/models"
 	"os"
 	"strings"
+	"github.com/satori/go.uuid"
 )
 
 // excle导入到临时表
@@ -31,7 +32,8 @@ CREATE TABLE excel_table
 (
   Id      INT(11) PRIMARY KEY NOT NULL COMMENT 'id' AUTO_INCREMENT,
   Mark    VARCHAR(50) COMMENT '标识',
-  Sheet   VARCHAR(50) COMMENT 'Sheet名',
+  Uuid    VARCHAR(36) COMMENT '每次导入的标识',
+  Sheet   VARCHAR(20) COMMENT 'Sheet名',
   Field   VARCHAR(50),
   Field1  VARCHAR(50),
   Field2  VARCHAR(50),
@@ -139,12 +141,14 @@ func (c *ExcelToMysqlController) ParseFile() {
 	}
 
 	var tempTables []models.ExcelTable
+	uuidString:=uuid.NewV4().String()
 	for _,sheet:=range file.Sheets {
 		for _, row := range sheet.Rows {
 			tempTable := models.ExcelTable{}
 			for k, v := range row.Cells {
 				tempTable.Mark = c.GetString("mark")
 				tempTable.Sheet = sheet.Name
+				tempTable.Uuid = uuidString
 				switch k {
 				case 0:tempTable.Field = v.Value
 				case 1:tempTable.Field1 = v.Value

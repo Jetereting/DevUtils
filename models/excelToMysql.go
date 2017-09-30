@@ -10,6 +10,7 @@ func init() {
 type ExcelTable struct {
 	Id      int `orm:"column(id);auto" json:"id"`
 	Mark    string
+	Uuid    string
 	Sheet   string
 	Field   string `orm:"column(Field)"`
 	Field1  string
