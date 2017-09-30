@@ -4,12 +4,13 @@ import "github.com/astaxie/beego/orm"
 
 func init() {
 	// 需要在init中注册定义的model
-	orm.RegisterModel(new(TempTable))
+	orm.RegisterModel(new(ExcelTable))
 }
 
-type TempTable struct {
+type ExcelTable struct {
 	Id      int `orm:"column(id);auto" json:"id"`
 	Mark    string
+	Sheet   string
 	Field   string `orm:"column(Field)"`
 	Field1  string
 	Field2  string
