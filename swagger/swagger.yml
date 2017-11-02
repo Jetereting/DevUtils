@@ -7,6 +7,18 @@ info:
     email: alloyjetereting@gmail.com
 basePath: /api
 paths:
+  /config/mysql:
+    get:
+      tags:
+      - config
+      summary: Mysql 配置
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: 请求发生错误
+        "500":
+          description: 服务器错误
   /docToCode/apiPhoneController:
     put:
       tags:
@@ -122,6 +134,42 @@ paths:
           description: 请求发生错误
         "500":
           description: 服务器错误
+  /mysqlToExcel/toExcel:
+    put:
+      tags:
+      - mysqlToExcel
+      summary: mysql导出到excel
+      parameters:
+      - in: body
+        name: body
+        description: sql内容
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: 请求发生错误
+        "500":
+          description: 服务器错误
+  /tabletostruct/tabletostruct:
+    put:
+      tags:
+      - tabletostruct
+      summary: mysql表生成结构体
+      parameters:
+      - in: body
+        name: body
+        description: mysql 表的创建语句
+        required: true
+        type: string
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: 请求发生错误
+        "500":
+          description: 服务器错误
   /toLowercase/toLowerCase:
     put:
       tags:
@@ -141,9 +189,15 @@ paths:
         "500":
           description: 服务器错误
 tags:
+- name: config
+  description: |
+    配置文件
 - name: excelToMysql
   description: |
     excle导入到临时表
+- name: mysqlToExcel
+  description: |
+    导出到excel
 - name: modelTranslateMarkDown
   description: |
     model 和 markdown 的相互转化
@@ -153,3 +207,6 @@ tags:
 - name: docToCode
   description: |
     文档生成代码
+- name: tabletostruct
+  description: |
+    mysql表生成结构体

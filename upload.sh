@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-scp -r beegoAutoDoc swagger static root@192.168.1.201:/home/devUtils
+scp -r beegoAutoDoc swagger static conf root@139.199.39.76:/home/devUtils

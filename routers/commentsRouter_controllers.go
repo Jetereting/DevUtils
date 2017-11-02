@@ -6,6 +6,13 @@ import (
 
 func init() {
 
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ConfigController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ConfigController"],
+		beego.ControllerComments{
+			Method: "MysqlDetail",
+			Router: `/mysql`,
+			AllowHTTPMethods: []string{"get"},
+			Params: nil})
+
 	beego.GlobalControllerRouter["beegoAutoDoc/controllers:DocToCodeController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:DocToCodeController"],
 		beego.ControllerComments{
 			Method: "ApiPhoneController",
@@ -45,6 +52,20 @@ func init() {
 		beego.ControllerComments{
 			Method: "MarkDownToModel",
 			Router: `/MarkDownToModel`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:MysqlToExcelController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:MysqlToExcelController"],
+		beego.ControllerComments{
+			Method: "ToExcel",
+			Router: `/toExcel`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:TableToStructController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:TableToStructController"],
+		beego.ControllerComments{
+			Method: "C",
+			Router: `/tabletostruct`,
 			AllowHTTPMethods: []string{"put"},
 			Params: nil})
 

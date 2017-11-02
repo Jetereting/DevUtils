@@ -11,9 +11,17 @@ import (
 
 func init() {
 	ns := beego.NewNamespace("/api",
-		beego.NSNamespace("/excelToMysql",
+		beego.NSNamespace("/config",
+			beego.NSInclude(
+				&controllers.ConfigController{},
+			),
+		),beego.NSNamespace("/excelToMysql",
 			beego.NSInclude(
 				&controllers.ExcelToMysqlController{},
+			),
+		),beego.NSNamespace("/mysqlToExcel",
+			beego.NSInclude(
+				&controllers.MysqlToExcelController{},
 			),
 		),
 		beego.NSNamespace("/modelTranslateMarkDown",
@@ -29,6 +37,11 @@ func init() {
 		beego.NSNamespace("/docToCode",
 			beego.NSInclude(
 				&controllers.DocToCodeController{},
+			),
+		),
+		beego.NSNamespace("/tabletostruct",
+			beego.NSInclude(
+				&controllers.TableToStructController{},
 			),
 		),
 	)
