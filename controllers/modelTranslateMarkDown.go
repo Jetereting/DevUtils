@@ -4,6 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"io/ioutil"
 	"strings"
+	"beegoAutoDoc/utils"
 )
 
 // model 和 markdown 的相互转化
@@ -44,6 +45,56 @@ func (c *ModelTranslateMarkDownController) ModelToMarkDown() {
 		result += `|` + "\n"
 	}
 	result = strings.Replace(result, "	", "", -1)
+	c.Ctx.WriteString(result)
+}
+
+// @Summary 科技厅项目 Schema to Markdown |数据库字段|备注|
+// @Param body body string true "科技厅结构体里面的内容"
+// @Param is3 query bool false "|数据库字段|类型|备注|"
+// @Success 200 成功
+// @Failure 400 请求发生错误
+// @Failure 500 服务器错误
+// @router /SchemaToMarkDown [put]
+func (c *ModelTranslateMarkDownController) SchemaToMarkDown() {
+	is3, _ := c.GetBool("is3", false)
+	req := c.Ctx.Request.Body
+	bod, _ := ioutil.ReadAll(req)
+	body := string(bod)
+
+	result:=""
+	if !is3{
+		result =
+			`|数据库字段|备注|`+"\n"+`|----|----|` + "\n"
+		for _, v := range strings.Split(body, "\n") {
+			if strings.Contains(v,"json:\""){
+				result+="|"+utils.GetBetweenStr(v,"structs:\"","\" json:\"")
+				result+="|"+strings.Replace(utils.GetBetweenStr(v,"//"," json:")," ","",1)
+				result+="|"
+				result +="\n"
+			}
+		}
+	}else {
+		result =
+			`|数据库字段|类型|备注|`+"\n"+`|----|------|----|` + "\n"
+		for _, v := range strings.Split(body, "\n") {
+			if strings.Contains(v,"json:\""){
+				ty:=""
+				if strings.Contains(v," string"){
+					ty="字符串"
+				}else if strings.Contains(v," int"){
+					ty="数值"
+				}else if strings.Contains(v," float"){
+					ty="小数"
+				}
+				result+="|"+utils.GetBetweenStr(v,"structs:\"","\" json:\"")
+				result+="|"+ty
+				result+="|"+strings.Replace(utils.GetBetweenStr(v,"//"," json:")," ","",1)
+				result+="|"
+				result +="\n"
+			}
+		}
+	}
+
 	c.Ctx.WriteString(result)
 }
 

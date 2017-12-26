@@ -50,6 +50,13 @@ func init() {
 
 	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"],
 		beego.ControllerComments{
+			Method: "SchemaToMarkDown",
+			Router: `/SchemaToMarkDown`,
+			AllowHTTPMethods: []string{"put"},
+			Params: nil})
+
+	beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"] = append(beego.GlobalControllerRouter["beegoAutoDoc/controllers:ModelTranslateMarkDownController"],
+		beego.ControllerComments{
 			Method: "MarkDownToModel",
 			Router: `/MarkDownToModel`,
 			AllowHTTPMethods: []string{"put"},

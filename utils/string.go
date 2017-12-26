@@ -62,7 +62,7 @@ func (s Str) ToMap() map[string]string {
 func GetBetweenStr(str, start, end string) string {
 	n := strings.Index(str, start)
 	if n == -1 {
-		n = 0
+		return ""
 	}
 	str = string([]byte(str)[n+len(start):])
 	m := strings.Index(str, end)

@@ -207,6 +207,40 @@
                 }
             }
         },
+        "/modelTranslateMarkDown/SchemaToMarkDown": {
+            "put": {
+                "tags": [
+                    "modelTranslateMarkDown"
+                ],
+                "summary": "科技厅项目 Schema to Markdown |数据库字段|备注|",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "科技厅结构体里面的内容",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "is3",
+                        "description": "|数据库字段|类型|备注|",
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    },
+                    "400": {
+                        "description": "请求发生错误"
+                    },
+                    "500": {
+                        "description": "服务器错误"
+                    }
+                }
+            }
+        },
         "/mysqlToExcel/toExcel": {
             "put": {
                 "tags": [
