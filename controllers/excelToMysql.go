@@ -6,7 +6,7 @@ import (
 	"time"
 	"github.com/tealeg/xlsx"
 	"github.com/astaxie/beego/orm"
-	"beegoAutoDoc/models"
+	"DevUtils/models"
 	"os"
 	"strings"
 	"github.com/satori/go.uuid"

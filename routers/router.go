@@ -5,7 +5,7 @@
 package routers
 
 import (
-	"beegoAutoDoc/controllers"
+	"DevUtils/controllers"
 	"github.com/astaxie/beego"
 )
 

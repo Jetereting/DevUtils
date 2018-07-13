@@ -4,7 +4,7 @@ import (
 	"github.com/astaxie/beego"
 	"io/ioutil"
 	"strings"
-	"beegoAutoDoc/utils"
+	"DevUtils/utils"
 )
 
 // model 和 markdown 的相互转化

@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "beegoAutoDoc/routers"
+	_ "DevUtils/routers"
 	"github.com/astaxie/beego"
 	_ "github.com/go-sql-driver/mysql"
 	"runtime"

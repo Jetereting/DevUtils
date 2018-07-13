@@ -4,7 +4,7 @@ import (
 	"io/ioutil"
 	"github.com/astaxie/beego"
 	"strings"
-	"beegoAutoDoc/utils"
+	"DevUtils/utils"
 )
 
 

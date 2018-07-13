@@ -4,7 +4,7 @@ conf/
 lastupdate.tmp
 mem-10681.memprof
 .DS_Store
-beegoAutoDoc
-beegoAutoDoc 2/
-beegoAutoDoc.tar.gz
+DevUtils
+DevUtils 2/
+DevUtils.tar.gz
 !/controllers/docToCode.go

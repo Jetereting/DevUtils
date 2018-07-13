@@ -1,5 +1,5 @@
 #!/bin/bash
 
-killall beegoAutoDoc
-chmod +u beegoAutoDoc
-nohup ./beegoAutoDoc > "out.log" 2>&1 &
+killall DevUtils
+chmod +u DevUtils
+nohup ./DevUtils > "out.log" 2>&1 &

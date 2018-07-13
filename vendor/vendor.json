@@ -3,30 +3,6 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "drnEa7jO3vYEO0pMtk3Se7swKAQ=",
-			"path": "beegoAutoDoc/controllers",
-			"revision": "c9f892cf8c43d3c905a9338af0d7dcd5d5f854df",
-			"revisionTime": "2017-12-26T03:42:19Z"
-		},
-		{
-			"checksumSHA1": "RvMTSUq8oJiCQLQUQQ09DMYqjpw=",
-			"path": "beegoAutoDoc/models",
-			"revision": "c9f892cf8c43d3c905a9338af0d7dcd5d5f854df",
-			"revisionTime": "2017-12-26T03:42:19Z"
-		},
-		{
-			"checksumSHA1": "pfJuBq5zC43pPxDTkFiTBZgIMA0=",
-			"path": "beegoAutoDoc/routers",
-			"revision": "c9f892cf8c43d3c905a9338af0d7dcd5d5f854df",
-			"revisionTime": "2017-12-26T03:42:19Z"
-		},
-		{
-			"checksumSHA1": "q5b4k5Wb8GPYo6YkgnmDEX0bhlo=",
-			"path": "beegoAutoDoc/utils",
-			"revision": "c9f892cf8c43d3c905a9338af0d7dcd5d5f854df",
-			"revisionTime": "2017-12-26T03:42:19Z"
-		},
-		{
 			"checksumSHA1": "a9Sq/X9bS1l5EA7KfRmtw4lMedY=",
 			"path": "github.com/astaxie/beego",
 			"revision": "f16688817aa428d10361394015b40d096b680542",
